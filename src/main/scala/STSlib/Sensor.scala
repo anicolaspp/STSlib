@@ -39,7 +39,7 @@ class Sensor(id: Int)  extends Actor with ActorLogging {
   def run() = {
     import scala.concurrent.duration._
 
-    scheduler = context.system.scheduler.schedule(1 seconds, 100 milliseconds, self, __tick__)
+    scheduler = context.system.scheduler.schedule(1 seconds, 2000 milliseconds, self, __tick__)
   }
 }
 

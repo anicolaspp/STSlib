@@ -8,6 +8,8 @@ import java.net.{ServerSocket, Socket}
 
 import akka.actor.{ActorLogging, Actor}
 
+import scala.concurrent.Future
+
 class SocketActor extends Actor with ActorLogging {
 
   var connectionPool = List[(Int, Socket)]()
@@ -16,27 +18,25 @@ class SocketActor extends Actor with ActorLogging {
 
   def openConnection(port: Int) = {
 
-    log.info("Openning connection")
 
-    val socket = new ServerSocket(port)
+      log.info("Openning connection")
+
+      val socket = new ServerSocket(port)
 
 
-    log.info("waitig for connections")
-    val s = socket.accept()
+      log.info("waitig for connections")
+      val s = socket.accept()
 
-    log.info(s"Connected at: ${s.getInetAddress}")
-    outSocket = Some(s)
+      log.info(s"Connected at: ${s.getInetAddress}")
+      outSocket = Some(s)
+
   }
 
   def receive = {
     case StartConnection(port)  => openConnection(port)
 
     case data @ SData(sid, temp, time) => outSocket match {
-      case None =>  {
-        openConnection(9090)
-        self ! data
-      }
-
+      case None =>  self ! data
       case Some(s)  =>  {
 
         println(data)
