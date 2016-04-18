@@ -4,7 +4,7 @@
 		module="stslib$sbt_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20160418124153"
+		publication="20160418161921"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>
